@@ -5,6 +5,7 @@ const App = () => {
   const [image, setImage] = useState(null);
   const [facesDetected, setFacesDetected] = useState(0);
   const [faces, setFaces] = useState([]);
+  const [similarImages, setSimilarImages] = useState([]); // Estado para imágenes similares
   const fileInputRef = useRef();
 
   const handleFileChange = (event) => {
@@ -27,6 +28,15 @@ const App = () => {
 
       setFacesDetected(response.data.facesDetected);
       setFaces(response.data.faces);
+
+      // Simular la obtención de imágenes similares (puedes reemplazar esto con una API real)
+      const mockSimilarImages = [
+        "https://via.placeholder.com/150",
+        "https://via.placeholder.com/150",
+        "https://via.placeholder.com/150",
+        "https://via.placeholder.com/150",
+      ];
+      setSimilarImages(mockSimilarImages);
     } catch (error) {
       console.error("Error en la detección de rostros:", error);
     }
@@ -35,7 +45,7 @@ const App = () => {
   return (
     <div style={styles.container}>
       <h2 style={styles.title}>Reconocimiento Facial</h2>
-      <p style={styles.description}>Sube una imagen para detectar rostros.</p>
+      <p style={styles.description}>Sube una imagen para detectar rostros y encontrar imágenes similares.</p>
 
       <div style={styles.uploadSection}>
         <input
@@ -59,9 +69,9 @@ const App = () => {
             alt="Preview"
             style={styles.previewImage}
           />
-          {faces.map((face) => (
+          {faces.map((face, index) => (
             <div
-              key={face.id}
+              key={index}
               style={{
                 ...styles.faceBox,
                 top: `${face.y}px`,
@@ -77,6 +87,22 @@ const App = () => {
       {facesDetected > 0 && (
         <h3 style={styles.result}>Rostros detectados: {facesDetected}</h3>
       )}
+
+      {similarImages.length > 0 && (
+        <div style={styles.similarImagesContainer}>
+          <h3 style={styles.similarImagesTitle}>Imágenes Similares</h3>
+          <div style={styles.similarImagesGrid}>
+            {similarImages.map((img, index) => (
+              <img
+                key={index}
+                src={img}
+                alt={`Similar ${index}`}
+                style={styles.similarImage}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -89,7 +115,7 @@ const styles = {
     backgroundColor: "#f0f0f0",
     borderRadius: "10px",
     boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
-    maxWidth: "600px",
+    maxWidth: "800px",
     margin: "50px auto",
   },
   title: {
@@ -153,6 +179,29 @@ const styles = {
     fontSize: "1.2em",
     fontWeight: "bold",
     color: "#333",
+  },
+  similarImagesContainer: {
+    marginTop: "30px",
+  },
+  similarImagesTitle: {
+    fontSize: "1.5em",
+    marginBottom: "15px",
+    color: "#333",
+  },
+  similarImagesGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+    gap: "10px",
+  },
+  similarImage: {
+    width: "100%",
+    borderRadius: "10px",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+    transition: "transform 0.3s",
+    cursor: "pointer",
+  },
+  similarImageHover: {
+    transform: "scale(1.05)",
   },
 };
 
