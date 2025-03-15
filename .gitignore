@@ -1,9 +1,6 @@
 # Ignorar node_modules
 node_modules/
 
-# Ignorar la carpeta frontend/
-frontend/
-
 # Otros archivos que puedan no ser necesarios (puedes agregar más si lo deseas)
 *.log
 *.env
