@@ -1,6 +1,0 @@
-# Ignorar node_modules
-node_modules/
-
-# Otros archivos que puedan no ser necesarios (puedes agregar más si lo deseas)
-*.log
-*.env
